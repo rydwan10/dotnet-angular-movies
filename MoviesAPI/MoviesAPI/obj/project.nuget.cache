@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "CqNk0AoqIxhzD9m76ML2/JMiVyxjNppjjUp79Zoldacg08hc8gAWQmmPzR1KDDXlrA7XleDCWaTNFLXTkm+/OQ==",
+  "success": true,
+  "projectFilePath": "D:\\Dev\\Udemy\\Building Applications with Angular 11 and ASP.NET Core 5\\AngularMovies\\MoviesAPI\\MoviesAPI\\MoviesAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\lenovoo.DESKTOP-EJDQ5F3\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
