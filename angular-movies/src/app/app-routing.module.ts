@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateActorsComponent } from './actors/create-actors/create-actors.component';
+import { CreateActorComponent } from './actors/create-actor/create-actor.component';
 import { EditActorComponent } from './actors/edit-actor/edit-actor.component';
 import { IndexActorsComponent } from './actors/index-actors/index-actors.component';
 import { CreateGenreComponent } from './genres/create-genre/create-genre.component';
@@ -12,6 +12,7 @@ import { EditMovieTheaterComponent } from './movie-theaters/edit-movie-theater/e
 import { IndexMovieTheatersComponent } from './movie-theaters/index-movie-theaters/index-movie-theaters.component';
 import { CreateMovieComponent } from './movies/create-movie/create-movie.component';
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
+import { MovieFilterComponent } from './movies/movie-filter/movie-filter.component';
 
 const routes: Routes = [
   // Home
@@ -41,7 +42,7 @@ const routes: Routes = [
   },
   {
     path: 'actors/create',
-    component: CreateActorsComponent,
+    component: CreateActorComponent,
   },
   {
     path: 'actors/edit/:id',
@@ -68,6 +69,9 @@ const routes: Routes = [
     path: 'movies/edit/:id',
     component: EditMovieComponent,
   },
+
+  // Filter Movie
+  { path: 'movies/filter', component: MovieFilterComponent },
 
   // Wildcard Route
   { path: '**', redirectTo: '' },
