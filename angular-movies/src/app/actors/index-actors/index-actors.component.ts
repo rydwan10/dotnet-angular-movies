@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { actorDTO } from '../actors.model';
+import { ActorsService } from '../actors.service';
 
 @Component({
   selector: 'app-index-actors',
@@ -6,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index-actors.component.css'],
 })
 export class IndexActorsComponent implements OnInit {
-  constructor() {}
+  constructor(private _actorService: ActorsService) {}
 
-  ngOnInit(): void {}
+  actors: actorDTO[];
+
+  ngOnInit(): void {
+    this._actorService.get().subscribe((actors: actorDTO[]) => {
+      this.actors = actors;
+    });
+  }
 
   saveChanges() {}
+
+  delete() {}
 }
