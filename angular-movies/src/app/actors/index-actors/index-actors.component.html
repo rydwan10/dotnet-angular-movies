@@ -39,5 +39,14 @@
       <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
       <tr mat-row *matRowDef="let row; columns: ['name', 'actions']"></tr>
     </table>
+    <mat-paginator
+      class="mat-elevation-z8"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      [length]="totalAmountOfRecords"
+      [pageSize]="pageSize"
+      (page)="updatePagination($event)"
+    >
+    </mat-paginator>
   </ng-container>
 </app-generic-list>
