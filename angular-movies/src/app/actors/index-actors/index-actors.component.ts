@@ -22,14 +22,17 @@ export class IndexActorsComponent implements OnInit {
   }
 
   loadData() {
-    this._actorService
-      .get(this.currentPage, this.pageSize)
-      .subscribe((response: HttpResponse<actorDTO[]>) => {
+    this._actorService.get(this.currentPage, this.pageSize).subscribe(
+      (response: HttpResponse<actorDTO[]>) => {
         this.actors = response.body;
         this.totalAmountOfRecords = response.headers.get(
           'totalAmountOfRecords'
         );
-      });
+      },
+      (err) => {
+        console.log('🍟🍟Something went wrong', err);
+      }
+    );
   }
 
   updatePagination(pageEvent: PageEvent) {
@@ -39,5 +42,9 @@ export class IndexActorsComponent implements OnInit {
   }
   saveChanges() {}
 
-  delete() {}
+  delete(id: number) {
+    this._actorService.delete(id).subscribe(() => {
+      this.loadData();
+    });
+  }
 }

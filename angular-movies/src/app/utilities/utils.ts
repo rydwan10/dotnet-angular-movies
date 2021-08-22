@@ -29,6 +29,7 @@ export function parseWebAPIErrors(response: any) {
 }
 
 export function formatDateFormData(date: Date) {
+  const formattedDate = new Date(date);
   const format = new Intl.DateTimeFormat('en-us', {
     year: 'numeric',
     month: '2-digit',
@@ -36,7 +37,7 @@ export function formatDateFormData(date: Date) {
   });
 
   const [{ value: month }, , { value: day }, , { value: year }] =
-    format.formatToParts(date);
+    format.formatToParts(formattedDate);
 
   return `${year}-${month}-${day}`;
 }

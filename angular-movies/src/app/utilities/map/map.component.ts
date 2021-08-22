@@ -11,14 +11,15 @@ export class MapComponent implements OnInit {
   options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 24,
+        maxZoom: 100,
         attribution: 'Angular Movies',
       }),
     ],
+    worldCopyJump: true,
     zoom: 12,
-    center: latLng(-6.300454414359868, -253.19091796875003),
+    // center: latLng(-6.300454414359868, -253.19091796875003),
+    center: latLng(-6.177274594566857, 106.79141104642771),
   };
-
   layers: Marker<any>[] = [];
 
   @Input()

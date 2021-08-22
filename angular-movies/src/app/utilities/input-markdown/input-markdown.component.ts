@@ -12,6 +12,9 @@ export class InputMarkdownComponent implements OnInit {
   @Input()
   markdownContent = '';
 
+  @Input()
+  label = 'Value';
+
   constructor() {}
 
   ngOnInit(): void {}
