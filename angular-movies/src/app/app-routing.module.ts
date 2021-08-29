@@ -12,6 +12,7 @@ import { EditMovieTheaterComponent } from './movie-theaters/edit-movie-theater/e
 import { IndexMovieTheatersComponent } from './movie-theaters/index-movie-theaters/index-movie-theaters.component';
 import { CreateMovieComponent } from './movies/create-movie/create-movie.component';
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
+import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 import { MovieFilterComponent } from './movies/movie-filter/movie-filter.component';
 
 const routes: Routes = [
@@ -72,6 +73,9 @@ const routes: Routes = [
 
   // Filter Movie
   { path: 'movies/filter', component: MovieFilterComponent },
+
+  // Movie Detail by Id
+  { path: 'movies/:id', component: MovieDetailsComponent },
 
   // Wildcard Route
   { path: '**', redirectTo: '' },

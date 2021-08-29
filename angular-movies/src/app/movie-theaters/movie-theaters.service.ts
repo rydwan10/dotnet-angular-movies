@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
+  homeDTO,
   movieTheatersCreationDTO,
   movieTheatersDTO,
 } from './movie-theaters.model';

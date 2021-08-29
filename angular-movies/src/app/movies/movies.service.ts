@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { homeDTO } from '../movie-theaters/movie-theaters.model';
 import { formatDateFormData } from '../utilities/utils';
-import { movieCreationDTO, MoviePostGetDTO } from './movie.model';
+import { movieCreationDTO, movieDTO, MoviePostGetDTO } from './movie.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,10 @@ export class MoviesService {
 
   private apiUrl = environment.apiURL + '/movies';
 
+  public getHomePageMovies(): Observable<homeDTO> {
+    return this.http.get<homeDTO>(this.apiUrl);
+  }
+
   public postGet(): Observable<MoviePostGetDTO> {
     return this.http.get<MoviePostGetDTO>(`${this.apiUrl}/PostGet`);
   }
@@ -20,6 +25,10 @@ export class MoviesService {
   public create(movieCreationDTO: movieCreationDTO) {
     const formData = this.BuildFormData(movieCreationDTO);
     return this.http.post(this.apiUrl, formData);
+  }
+
+  public getById(id: number): Observable<movieDTO> {
+    return this.http.get<movieDTO>(`${this.apiUrl}/${id}`);
   }
 
   private BuildFormData(movie: movieCreationDTO): FormData {

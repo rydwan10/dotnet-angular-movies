@@ -46,6 +46,21 @@ namespace MoviesAPI.Controllers
             return _mapper.Map<ActorDTO>(actor);
         }
 
+        [HttpPost("searchByName")]
+        public async Task<ActionResult<List<ActorsMovieDTO>>> SearchByName([FromBody] string name)
+        {
+            if(string.IsNullOrWhiteSpace(name))
+            {
+                return new List<ActorsMovieDTO>();
+            }
+
+            return await _context.Actors
+                .Where(x => x.Name.Contains(name))
+                .OrderBy(x => x.Name)
+                .Select(x => new ActorsMovieDTO { Id = x.Id, Name = x.Name, Picture = x.Picture })
+                .Take(5).ToListAsync();
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromForm] ActorCreationDTO actorCreationDTO)
         {
@@ -62,10 +77,24 @@ namespace MoviesAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] ActorCreationDTO actorCreationDTO)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromForm] ActorCreationDTO actorCreationDTO)
         {
-            throw new NotImplementedException();
+            var actor = await _context.Actors.FirstOrDefaultAsync(x => x.Id == id);
+            if(actor == null)
+            {
+                return NotFound();
+            }
+
+            actor = _mapper.Map(actorCreationDTO, actor);
+
+            if(actorCreationDTO.Picture != null)
+            {
+                actor.Picture = await _fileStorageService.EditFile(containerName, actorCreationDTO.Picture, actor.Picture);
+            }
+
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
@@ -78,6 +107,7 @@ namespace MoviesAPI.Controllers
             _context.Remove(actor);
 
             await _context.SaveChangesAsync();
+            await _fileStorageService.DeleteFile(actor.Picture, containerName);
 
             return NoContent();
         }

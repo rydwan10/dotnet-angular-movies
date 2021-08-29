@@ -61,3 +61,8 @@ D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMov
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\AutoMapper.dll
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\obj\Debug\net5.0\MoviesAPI.csproj.AssemblyReference.cache
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\NetTopologySuite.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\NetTopologySuite.IO.SqlServerBytes.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\obj\Debug\net5.0\EFCoreSqlServerNetTopologySuite.cs
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Newtonsoft.Json.dll

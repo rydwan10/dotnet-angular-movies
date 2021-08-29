@@ -18,6 +18,9 @@ export class EditMovieComponent implements OnInit {
     trailer: 'Lorem Ipsum Dolor Sit Amet',
     poster:
       'https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg',
+    actors: [],
+    genres: [],
+    movieTheaters: [],
   };
 
   ngOnInit(): void {
