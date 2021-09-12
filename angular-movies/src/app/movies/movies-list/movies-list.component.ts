@@ -1,21 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MoviesService } from '../movies.service';
 
 @Component({
   selector: 'app-movies-list',
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.css']
+  styleUrls: ['./movies-list.component.css'],
 })
 export class MoviesListComponent implements OnInit {
   @Input() movies: [] = [];
+  @Output() onDelete = new EventEmitter<void>();
 
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  constructor(private _moviesService: MoviesService) {}
+
+  remove(id: number) {
+    this._moviesService.delete(id).subscribe(() => {
+      this.onDelete.emit();
+    });
   }
-  
-  constructor() { }
-
-  remove(index: number){
-    this.movies.splice(index, 1);
-  }
- 
 }

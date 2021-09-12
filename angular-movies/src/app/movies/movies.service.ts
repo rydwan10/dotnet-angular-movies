@@ -45,6 +45,10 @@ export class MoviesService {
     return this.http.get<movieDTO>(`${this.apiUrl}/${id}`);
   }
 
+  public delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
   public filter(values: any): Observable<any> {
     const params = new HttpParams({ fromObject: values });
     return this.http.get<movieDTO>(`${this.apiUrl}/filter`, {
