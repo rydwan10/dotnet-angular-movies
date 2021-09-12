@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { actorsMovieDTO } from 'src/app/actors/actors.model';
+import { multipleSelectorModel } from 'src/app/utilities/multiple-selector/multiple-selector.model';
 import { movieCreationDTO, movieDTO } from '../movie.model';
+import { MoviesService } from '../movies.service';
 
 @Component({
   selector: 'app-edit-movie',
@@ -8,26 +11,60 @@ import { movieCreationDTO, movieDTO } from '../movie.model';
   styleUrls: ['./edit-movie.component.css'],
 })
 export class EditMovieComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private _moviesSerivce: MoviesService,
+    private router: Router
+  ) {}
 
-  model: movieDTO = {
-    title: 'Spider-Man: Far from Home',
-    inTheaters: true,
-    summary: 'Lorem Ipsum Dolor Sit Amet',
-    releaseDate: new Date(),
-    trailer: 'Lorem Ipsum Dolor Sit Amet',
-    poster:
-      'https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    actors: [],
-    genres: [],
-    movieTheaters: [],
-  };
+  model: movieDTO;
+  selectedGenres: multipleSelectorModel[];
+  nonSelectedGenres: multipleSelectorModel[];
+  selectedMovieTheaters: multipleSelectorModel[];
+  nonSelectedMovieTheaters: multipleSelectorModel[];
+  selectedActors: actorsMovieDTO[];
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      console.log(params.id);
+      this._moviesSerivce.putGet(params.id).subscribe((putGetDTO) => {
+        this.model = putGetDTO.movie;
+
+        this.selectedGenres = putGetDTO.selectedGenres.map((genre) => {
+          return <multipleSelectorModel>{ key: genre.id, value: genre.name };
+        });
+
+        this.nonSelectedGenres = putGetDTO.nonSelectedGenres.map(
+          (movieTheater) => {
+            return <multipleSelectorModel>{
+              key: movieTheater.id,
+              value: movieTheater.name,
+            };
+          }
+        );
+
+        this.selectedMovieTheaters = putGetDTO.selectedMovieTheaters.map(
+          (genre) => {
+            return <multipleSelectorModel>{ key: genre.id, value: genre.name };
+          }
+        );
+
+        this.nonSelectedMovieTheaters = putGetDTO.nonSelectedMovieTheaters.map(
+          (movieTheater) => {
+            return <multipleSelectorModel>{
+              key: movieTheater.id,
+              value: movieTheater.name,
+            };
+          }
+        );
+
+        this.selectedActors = putGetDTO.actors;
+      });
     });
   }
 
-  saveChanges(movieCreationDTO: movieCreationDTO) {}
+  saveChanges(movieCreationDTO: movieCreationDTO) {
+    this._moviesSerivce.edit(this.model.id, movieCreationDTO).subscribe(() => {
+      this.router.navigate([`/movies/${this.model.id}`]);
+    });
+  }
 }

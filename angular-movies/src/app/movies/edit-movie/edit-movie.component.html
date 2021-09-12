@@ -3,4 +3,12 @@
 <app-form-movie
   [model]="model"
   (onSaveChanges)="saveChanges($event)"
+  *ngIf="model"
+  [nonSelectedGenres]="nonSelectedGenres"
+  [selectedGenres]="selectedGenres"
+  [selectedMovieTheaters]="selectedMovieTheaters"
+  [nonSelectedMovieTheaters]="nonSelectedMovieTheaters"
+  [selectedActors]="selectedActors"
 ></app-form-movie>
+
+<mat-spinner *ngIf="!model"></mat-spinner>

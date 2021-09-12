@@ -33,8 +33,8 @@ export class CreateMovieComponent implements OnInit {
   }
 
   saveChanges(movieCreationDTO: movieCreationDTO) {
-    this._moviesService.create(movieCreationDTO).subscribe(() => {
-      this.router.navigate(['']);
+    this._moviesService.create(movieCreationDTO).subscribe((id) => {
+      this.router.navigate([`/movies/${id}`]);
     });
   }
 }
