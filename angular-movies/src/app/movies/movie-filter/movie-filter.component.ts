@@ -1,5 +1,13 @@
+import { Location } from '@angular/common';
+import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
+import { genreDTO } from 'src/app/genres/genres.model';
+import { GenresService } from 'src/app/genres/genres.service';
+import { movieDTO } from '../movie.model';
+import { MoviesService } from '../movies.service';
 
 @Component({
   selector: 'app-movie-filter',
@@ -8,39 +16,20 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MovieFilterComponent implements OnInit {
   form: FormGroup;
-  genres = [
-    { id: 1, name: 'Drama' },
-    { id: 2, name: 'Comedy' },
-    { id: 3, name: 'Action' },
-  ];
+  genres: genreDTO[];
+  movies: movieDTO[];
+  currentPage = 1;
+  recordsPerPage = 10;
+  initialFormValues: any;
+  totalAmountOfRecords;
 
-  movies = [
-    {
-      title: 'The Dark Knight',
-      releaseDate: new Date(),
-      price: 1200,
-      poster:
-        'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    },
-    {
-      title: 'Avengers: Endgame',
-      releaseDate: new Date(),
-      price: 300,
-      poster:
-        'https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    },
-    {
-      title: 'Pirates of the Caribbean: Dead Men Tell No Tales',
-      releaseDate: new Date(),
-      price: 210,
-      poster:
-        'https://m.media-amazon.com/images/M/MV5BMTYyMTcxNzc5M15BMl5BanBnXkFtZTgwOTg2ODE2MTI@._V1_UX182_CR0,0,182,268_AL_.jpg',
-    },
-  ];
-
-  originalMovies = this.movies;
-
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private _moviesService: MoviesService,
+    private _genresService: GenresService,
+    private location: Location,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -50,21 +39,101 @@ export class MovieFilterComponent implements OnInit {
       inTheaters: false,
     });
 
-    this.form.valueChanges.subscribe((values) => {
-      this.movies = this.originalMovies;
-      this.filterMovies(values);
+    this.initialFormValues = this.form.value;
+    this.readParametersFromURL();
+
+    this._genresService.getAll().subscribe((genres) => {
+      this.genres = genres;
+
+      this.filterMovies(this.form.value);
+
+      this.form.valueChanges.subscribe((values) => {
+        this.filterMovies(values);
+        this.writeParamatersInURL();
+      });
     });
   }
 
   filterMovies(values: any) {
-    if (values.title) {
-      this.movies = this.movies.filter(
-        (movie) => movie.title.indexOf(values.title) !== -1
-      );
-    }
+    values.page = this.currentPage;
+    values.recordsPerPage = this.recordsPerPage;
+
+    this._moviesService
+      .filter(values)
+      .subscribe((response: HttpResponse<movieDTO[]>) => {
+        this.movies = response.body;
+        this.totalAmountOfRecords = response.headers.get(
+          'totalAmountOfRecords'
+        );
+      });
   }
 
   clearForm() {
-    this.form.reset();
+    this.form.patchValue(this.initialFormValues);
+  }
+
+  paginatorUpdate(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
+    this.recordsPerPage = event.pageSize;
+    this.writeParamatersInURL();
+    this.filterMovies(this.form.value);
+  }
+
+  private readParametersFromURL() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      var obj: any = {};
+
+      if (params.title) {
+        obj.title = params.title;
+      }
+
+      if (params.genreId) {
+        obj.genreId = Number(params.genreid);
+      }
+
+      if (params.upcomingReleases) {
+        obj.upcomingReleases = params.upcomingReleases;
+      }
+
+      if (params.inTheaters) {
+        obj.inTheaters = params.inTheaters;
+      }
+
+      if (params.page) {
+        this.currentPage = params.page;
+      }
+
+      if (params.recordsPerPage) {
+        this.recordsPerPage = params.recordsPerPage;
+      }
+
+      this.form.patchValue(obj);
+    });
+  }
+
+  private writeParamatersInURL() {
+    const queryStrings = [];
+    const formValues = this.form.value;
+
+    if (formValues.title) {
+      queryStrings.push(`title=${formValues.title}`);
+    }
+
+    if (formValues.genreId != '0') {
+      queryStrings.push(`genreId=${formValues.genreId}`);
+    }
+
+    if (formValues.upcomingReleases) {
+      queryStrings.push(`upcomingReleases=${formValues.upcomingReleases}`);
+    }
+
+    if (formValues.inTheaters) {
+      queryStrings.push(`inTheaters=${formValues.inTheaters}`);
+    }
+
+    queryStrings.push(`page=${this.currentPage}`);
+    queryStrings.push(`recordsPerPage=${this.recordsPerPage}`);
+
+    this.location.replaceState('movies/filter', queryStrings.join('&'));
   }
 }
