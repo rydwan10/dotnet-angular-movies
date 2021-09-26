@@ -66,3 +66,8 @@ D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMov
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\NetTopologySuite.IO.SqlServerBytes.dll
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\obj\Debug\net5.0\EFCoreSqlServerNetTopologySuite.cs
 D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+D:\Dev\Udemy\Building Applications with Angular 11 and ASP.NET Core 5\AngularMovies\MoviesAPI\MoviesAPI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll

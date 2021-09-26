@@ -18,25 +18,29 @@
           <a [routerLink]="'/movies/' + movie.id">{{ movie.title }}</a>
         </p>
         <div>
-          <a
-            [routerLink]="'/movies/edit/' + movie.id"
-            mat-flat-button
-            color="primary"
-            >Edit</a
-          >
-          <button
-            mat-flat-button
-            color="warn"
-            type="button"
-            [swal]="{
-              title: 'Confirmation',
-              text: 'Are you sure want to delete this movie?',
-              showCancelButton: true
-            }"
-            (confirm)="remove(movie.id)"
-          >
-            Delete
-          </button>
+          <app-authorize-view [role]="'admin'">
+            <ng-container authorized>
+              <a
+                [routerLink]="'/movies/edit/' + movie.id"
+                mat-flat-button
+                color="primary"
+                >Edit</a
+              >
+              <button
+                mat-flat-button
+                color="warn"
+                type="button"
+                [swal]="{
+                  title: 'Confirmation',
+                  text: 'Are you sure want to delete this movie?',
+                  showCancelButton: true
+                }"
+                (confirm)="remove(movie.id)"
+              >
+                Delete
+              </button>
+            </ng-container>
+          </app-authorize-view>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { CreateGenreComponent } from './genres/create-genre/create-genre.compone
 import { EditGenreComponent } from './genres/edit-genre/edit-genre.component';
 import { IndexGenresComponent } from './genres/index-genres/index-genres.component';
 import { HomeComponent } from './home/home.component';
+import { IsAdminGuard } from './is-admin.guard';
 import { CreateMovieTheaterComponent } from './movie-theaters/create-movie-theater/create-movie-theater.component';
 import { EditMovieTheaterComponent } from './movie-theaters/edit-movie-theater/edit-movie-theater.component';
 import { IndexMovieTheatersComponent } from './movie-theaters/index-movie-theaters/index-movie-theaters.component';
@@ -14,6 +15,8 @@ import { CreateMovieComponent } from './movies/create-movie/create-movie.compone
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 import { MovieFilterComponent } from './movies/movie-filter/movie-filter.component';
+import { LoginComponent } from './security/login/login.component';
+import { RegisterComponent } from './security/register/register.component';
 
 const routes: Routes = [
   // Home
@@ -26,46 +29,60 @@ const routes: Routes = [
   {
     path: 'genres',
     component: IndexGenresComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'genres/create',
     component: CreateGenreComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'genres/edit/:id',
     component: EditGenreComponent,
+    canActivate: [IsAdminGuard],
   },
 
   // Actor
   {
     path: 'actors',
     component: IndexActorsComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'actors/create',
     component: CreateActorComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'actors/edit/:id',
     component: EditActorComponent,
+    canActivate: [IsAdminGuard],
   },
 
   // Movie Theater
   {
     path: 'movietheaters',
     component: IndexMovieTheatersComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'movietheaters/create',
     component: CreateMovieTheaterComponent,
+    canActivate: [IsAdminGuard],
   },
   {
     path: 'movietheaters/edit/:id',
     component: EditMovieTheaterComponent,
+    canActivate: [IsAdminGuard],
   },
 
   // Movie
-  { path: 'movies/create', component: CreateMovieComponent },
+  {
+    path: 'movies/create',
+    component: CreateMovieComponent,
+    canActivate: [IsAdminGuard],
+  },
+
   {
     path: 'movies/edit/:id',
     component: EditMovieComponent,
@@ -76,6 +93,12 @@ const routes: Routes = [
 
   // Movie Detail by Id
   { path: 'movies/:id', component: MovieDetailsComponent },
+
+  // Login page
+  { path: 'login', component: LoginComponent },
+
+  // Register page
+  { path: 'register', component: RegisterComponent },
 
   // Wildcard Route
   { path: '**', redirectTo: '' },
