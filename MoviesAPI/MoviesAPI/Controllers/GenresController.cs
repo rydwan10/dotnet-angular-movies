@@ -17,6 +17,7 @@ namespace MoviesAPI.Controllers
 {
     [Route("api/genres")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
     public class GenresController : ControllerBase
     {
         private readonly ILogger<GenresController> _logger;
@@ -31,6 +32,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet] // api/genres
+        [AllowAnonymous]
         public async Task<ActionResult<List<GenreDTO>>> Get()
         {
             _logger.LogInformation("Get all the genres");
@@ -58,7 +60,7 @@ namespace MoviesAPI.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
+        
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] GenreCreationDTO genreCreationDTO)
         {

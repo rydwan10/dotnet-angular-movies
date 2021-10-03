@@ -19,6 +19,7 @@ using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,8 +32,8 @@ namespace MoviesAPI
 
         public Startup(IConfiguration configuration)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; }
@@ -63,7 +64,7 @@ namespace MoviesAPI
             services.AddSingleton(provider => new MapperConfiguration(config => {
                 var geometryFactory = provider.GetRequiredService<GeometryFactory>();
                 config.AddProfile(new AutoMapperProfiles(geometryFactory));
-                }).CreateMapper()
+            }).CreateMapper()
             );
             services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 
@@ -99,6 +100,11 @@ namespace MoviesAPI
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", options => options.RequireClaim("role", "admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,6 +17,7 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
 import { MovieFilterComponent } from './movies/movie-filter/movie-filter.component';
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
+import { UsersIndexComponent } from './security/users-index/users-index.component';
 
 const routes: Routes = [
   // Home
@@ -99,6 +100,13 @@ const routes: Routes = [
 
   // Register page
   { path: 'register', component: RegisterComponent },
+
+  // User Page
+  {
+    path: 'users',
+    component: UsersIndexComponent,
+    canActivate: [IsAdminGuard],
+  },
 
   // Wildcard Route
   { path: '**', redirectTo: '' },

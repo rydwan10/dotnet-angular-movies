@@ -1,8 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { authenticationResponse, userCredentials } from './security.model';
+import {
+  authenticationResponse,
+  userCredentials,
+  userDTO,
+} from './security.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +15,37 @@ export class SecurityService {
   constructor(private http: HttpClient) {}
 
   private apiUrl = environment.apiURL + '/accounts';
-  private tokenKey: string = 'token';
-  private expirationTokenKey: string = 'token-expiration';
+  private readonly tokenKey: string = 'token';
+  private readonly expirationTokenKey: string = 'token-expiration';
+  private readonly roleField = 'role';
+
+  getUsers(page: number, recordsPerPage: number): Observable<any> {
+    let params = new HttpParams();
+    params.append('page', page.toString());
+    params.append('recordsPerPage', recordsPerPage.toString());
+    return this.http.get<userDTO>(`${this.apiUrl}/listUsers`, {
+      observe: 'response',
+      params: params,
+    });
+  }
+
+  makeAdmin(userId: string) {
+    const headers = new HttpHeaders('Content-Type: application/json');
+    return this.http.post(`${this.apiUrl}/makeAdmin`, JSON.stringify(userId), {
+      headers: headers,
+    });
+  }
+
+  removeAdmin(userId: string) {
+    const headers = new HttpHeaders('Content-Type: application/json');
+    return this.http.post(
+      `${this.apiUrl}/removeAdmin`,
+      JSON.stringify(userId),
+      {
+        headers: headers,
+      }
+    );
+  }
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem(this.tokenKey);
@@ -48,7 +81,7 @@ export class SecurityService {
   }
 
   getRole(): string {
-    return '';
+    return this.getFieldFromJWT(this.roleField);
   }
 
   register(
@@ -73,5 +106,9 @@ export class SecurityService {
       this.expirationTokenKey,
       authenticationResponse.expiration.toString()
     );
+  }
+
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
   }
 }

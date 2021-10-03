@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +44,8 @@ import { AuthorizeViewComponent } from './security/authorize-view/authorize-view
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { AuthenticationFormComponent } from './security/authentication-form/authentication-form.component';
+import { JwtInterceptorService } from './security/jwt-interceptor.service';
+import { UsersIndexComponent } from './security/users-index/users-index.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,7 @@ import { AuthenticationFormComponent } from './security/authentication-form/auth
     LoginComponent,
     RegisterComponent,
     AuthenticationFormComponent,
+    UsersIndexComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,13 @@ import { AuthenticationFormComponent } from './security/authentication-form/auth
     MarkdownModule.forRoot(),
     SweetAlert2Module.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
